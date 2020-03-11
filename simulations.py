@@ -1,7 +1,15 @@
 import logging
 import random
 
-def simulate_match(strategy1, strategy2, payoff, first_to=16, max_rounds=30):
+def simulate_match(strategy1, strategy2, payoff,
+        first_to=16, max_rounds=30,
+        verbose=False):
+
+    if verbose:
+        logging.getLogger().setLevel(logging.INFO)
+    else:
+        logging.getLogger().setLevel(logging.WARNING)
+
     if max_rounds < first_to:
         raise ValueError("Not playing enough rounds for a victory to be possible.")
 
@@ -64,7 +72,6 @@ def simulate_matches(strategy1, strategy2, payoff, matches=10000):
     draws = 0
     rounds1 = 0
     rounds2 = 0
-    logging.getLogger().setLevel(logging.WARNING)
     for match_number in range(matches):
         res = simulate_match(strategy1, strategy2, payoff)
         if res["victor"] == 1:
